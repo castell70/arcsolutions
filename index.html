@@ -1,22 +1,1376 @@
 <!doctype html>
 <html lang="es" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARC Solutions | Consultoría, Desarrollo Empresarial & Integración Tecnológica</title>
-    <meta name="description" content="Firma de consultoría estratégica, reingeniería de procesos, integración tecnológica (ERP, CRM, RPA) y business intelligence para empresas." />
-    <meta property="og:title" content="ARC Solutions | Consultoría, Desarrollo Empresarial & Integración Tecnológica" />
-    <meta property="og:description" content="Firma de consultoría estratégica, reingeniería de procesos, integración tecnológica (ERP, CRM, RPA) y business intelligence para empresas." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/logo-arc.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet">
-  </head>
-  <body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-orange-500 selection:text-white">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARC Solutions | Consultoría, Desarrollo Empresarial & Integración Tecnológica</title>
+<meta name="description" content="Firma de consultoría estratégica, reingeniería de procesos, integración tecnológica (ERP, CRM, RPA) y business intelligence para empresas." />
+<link rel="icon" type="image/png" href="./images/logo-arc.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: { sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'] }
+    }
+  }
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.4/dist/confetti.browser.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<style>
+  html { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+  .gradient-hero {
+    background: radial-gradient(circle at 80% 20%, rgba(30,136,229,0.14) 0%, rgba(10,25,47,0.98) 60%),
+                linear-gradient(135deg, #0A192F 0%, #0F2342 100%);
+  }
+  .gradient-accent-line {
+    background: linear-gradient(90deg, #0D47A1 0%, #1E88E5 25%, #10B981 50%, #F57C00 75%, #D32F2F 100%);
+  }
+  .glass-dark {
+    background: rgba(15, 35, 66, 0.82);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  @keyframes pulse-border {
+    0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(16,185,129,0); }
+    100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+  }
+  .badge-pulse { animation: pulse-border 2s infinite; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px);} to { opacity:1; transform:translateY(0);} }
+  .animate-fadeIn { animation: fadeIn .35s ease-out; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #0A192F; }
+  ::-webkit-scrollbar-thumb { background: #1E88E5; border-radius: 4px; }
 
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none;
+    height: 8px; border-radius: 8px; background: #e2e8f0; outline: none; width: 100%;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #1e3a8a; cursor: pointer; border: 2px solid #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.25);
+  }
+  input[type="range"].thumb-amber::-webkit-slider-thumb { background: #F59E0B; }
+  input[type="range"].thumb-emerald::-webkit-slider-thumb { background: #059669; }
+  input[type="range"].thumb-blue::-webkit-slider-thumb { background: #1e40af; }
+  input[type="range"]::-moz-range-thumb {
+    width: 20px; height: 20px; border-radius: 50%;
+    background: #1e3a8a; cursor: pointer; border: 2px solid #fff;
+  }
+
+  /* Logo sizing control */
+  .logo-navbar { height: 60px; width: auto; object-fit: contain; }
+  .logo-footer { height: 56px; width: auto; object-fit: contain; }
+  @media (max-width: 640px) {
+    .logo-navbar { height: 48px; }
+  }
+
+  /* Photo frames */
+  .exec-photo {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center;
+    transition: transform .7s ease;
+  }
+  .exec-photo-wrap:hover .exec-photo { transform: scale(1.05); }
+</style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-amber-500 selection:text-white">
+
+<!-- ============================================================
+     NAVBAR
+     ============================================================ -->
+<header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100">
+  <!-- Top info bar -->
+  <div class="bg-[#0A192F] text-slate-300 text-xs py-2 px-4 border-b border-slate-800 hidden md:block">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="flex items-center space-x-6">
+        <span class="flex items-center"><i data-lucide="trending-up" class="w-3.5 h-3.5 text-amber-400 mr-2"></i>Consultoría Estratégica & Optimización de Procesos</span>
+        <span class="flex items-center"><i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400 mr-2"></i>Certificados ISO 27001 & Agile Management</span>
+      </div>
+      <div class="flex items-center space-x-5">
+        <a href="tel:+50322008900" class="flex items-center hover:text-blue-400 transition"><i data-lucide="phone" class="w-3.5 h-3.5 text-sky-400 mr-1.5"></i>+503 2200-8900</a>
+        <a href="mailto:contacto@arcsolutions.com.sv" class="flex items-center hover:text-amber-400 transition"><i data-lucide="mail" class="w-3.5 h-3.5 mr-1.5"></i>contacto@arcsolutions.com.sv</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main nav -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <!-- LOGO -->
+      <a href="#inicio" class="flex items-center shrink-0" aria-label="ARC Solutions - Inicio">
+        <img src="./images/logo-arc.png" alt="ARC Solutions" class="logo-navbar"
+             onerror="this.replaceWith(Object.assign(document.createElement('span'),{innerHTML:'<span style=&quot;font-weight:800;font-size:22px;color:#091E3A&quot;>ARC <span style=&quot;color:#F97316&quot;>Solutions</span></span>'}));" />
+      </a>
+
+      <!-- Desktop links -->
+      <nav class="hidden lg:flex items-center space-x-6 font-medium text-sm">
+        <a href="#inicio" class="text-blue-900 font-semibold hover:text-blue-700">Inicio</a>
+        <a href="#servicios" class="text-slate-700 hover:text-blue-800">Servicios</a>
+        <a href="#calculadora" class="text-amber-600 hover:text-amber-700 font-semibold">Calculadora ROI</a>
+        <a href="#diagnostico" class="text-emerald-700 hover:text-emerald-800 font-semibold">Diagnóstico 360°</a>
+        <a href="#dashboard-demo" class="text-slate-700 hover:text-blue-800">Dashboard BI</a>
+        <a href="#quienes-somos" class="text-slate-700 hover:text-blue-800">Quiénes Somos</a>
+        <a href="#contacto" class="text-slate-700 hover:text-blue-800">Contacto</a>
+      </nav>
+
+      <!-- CTA + Mobile toggle -->
+      <div class="flex items-center space-x-3">
+        <a href="#contacto" class="hidden sm:inline-flex items-center px-4 py-2.5 rounded-xl font-bold text-xs text-white bg-emerald-700 hover:bg-emerald-600 transition shadow-md">
+          <i data-lucide="zap" class="w-3.5 h-3.5 mr-1.5"></i>Agendar Consultoría
+        </a>
+        <button id="mobile-menu-toggle" class="lg:hidden text-slate-700 p-2 rounded-lg" aria-label="Toggle menu">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="h-1 w-full gradient-accent-line"></div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-3 pb-6 space-y-2 shadow-xl">
+    <a href="#inicio" class="block px-3 py-2.5 rounded-xl font-bold text-blue-900 bg-blue-50">Inicio</a>
+    <a href="#servicios" class="block px-3 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-slate-50">Servicios</a>
+    <a href="#calculadora" class="block px-3 py-2.5 rounded-xl font-semibold text-amber-700 bg-amber-50">Calculadora ROI</a>
+    <a href="#diagnostico" class="block px-3 py-2.5 rounded-xl font-semibold text-emerald-800 bg-emerald-50">Diagnóstico 360°</a>
+    <a href="#dashboard-demo" class="block px-3 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-slate-50">Dashboard BI</a>
+    <a href="#quienes-somos" class="block px-3 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-slate-50">Quiénes Somos</a>
+    <a href="#contacto" class="block px-3 py-2.5 rounded-xl font-medium text-slate-700 hover:bg-slate-50">Contacto</a>
+    <a href="#contacto" class="block text-center px-4 py-3 rounded-xl font-bold text-white bg-emerald-700 hover:bg-emerald-600 transition mt-3">Agendar Consultoría</a>
+  </div>
+</header>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section id="inicio" class="relative gradient-hero text-white overflow-hidden py-16 lg:py-24">
+  <div class="absolute inset-0 z-0 opacity-25 pointer-events-none">
+    <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full bg-blue-600 blur-3xl"></div>
+    <div class="absolute bottom-0 left-1/4 w-80 h-80 rounded-full bg-emerald-600 blur-3xl"></div>
+    <div class="absolute top-1/2 left-10 w-64 h-64 rounded-full bg-amber-500 blur-3xl opacity-20"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7 space-y-8">
+        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs font-semibold text-emerald-300 badge-pulse">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Consultoría Tecnológica & Rediseño de Procesos</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight">
+          Evolucionamos la <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-emerald-400 to-amber-400">Eficiencia Operativa</span> de su Empresa
+        </h1>
+
+        <p class="text-base sm:text-lg text-slate-300 max-w-2xl font-light leading-relaxed">
+          Diagnosticamos cuellos de botella, integramos soluciones tecnológicas avanzadas (ERP, CRM, BI, RPA) y reestructuramos flujos de trabajo para maximizar la rentabilidad y escalabilidad de su negocio.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 pt-2">
+          <a href="#calculadora" class="px-7 py-4 rounded-xl font-bold text-white bg-emerald-700 hover:bg-emerald-600 transition shadow-lg flex items-center justify-center space-x-3 group">
+            <span>Calcular Mi Ahorro Operativo</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+          </a>
+          <a href="#diagnostico" class="px-7 py-4 rounded-xl font-bold text-slate-200 bg-white/10 hover:bg-white/20 border border-white/20 transition flex items-center justify-center space-x-3">
+            <i data-lucide="check-circle-2" class="w-4 h-4 text-amber-400"></i>
+            <span>Iniciar Diagnóstico Digital</span>
+          </a>
+        </div>
+
+        <div class="pt-8 border-t border-slate-800/80 grid grid-cols-2 sm:grid-cols-4 gap-6">
+          <div><span class="block text-3xl font-extrabold text-white">+45%</span><span class="text-xs text-slate-400 font-medium">Incremento Eficiencia</span></div>
+          <div><span class="block text-3xl font-extrabold text-amber-400">-35%</span><span class="text-xs text-slate-400 font-medium">Reducción Costos</span></div>
+          <div><span class="block text-3xl font-extrabold text-emerald-400">+120</span><span class="text-xs text-slate-400 font-medium">Empresas Optimizadas</span></div>
+          <div><span class="block text-3xl font-extrabold text-sky-400">3.2x</span><span class="text-xs text-slate-400 font-medium">Retorno Inversión</span></div>
+        </div>
+      </div>
+
+      <!-- Hero simulator -->
+      <div class="lg:col-span-5">
+        <div class="glass-dark p-6 sm:p-8 rounded-3xl shadow-2xl space-y-6">
+          <div class="flex items-center justify-between border-b border-white/10 pb-4">
+            <div class="flex items-center space-x-2">
+              <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+              <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+              <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+              <span class="text-xs font-mono text-slate-300 ml-2">ARC_Optimizer_v4</span>
+            </div>
+            <span class="text-[10px] uppercase tracking-widest font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">En Vivo</span>
+          </div>
+
+          <div class="space-y-4">
+            <h3 class="text-base font-bold flex items-center">
+              <i data-lucide="sliders" class="w-4 h-4 text-amber-400 mr-2"></i>
+              Simulación de Automatización
+            </h3>
+
+            <div class="space-y-2">
+              <div class="flex justify-between text-xs text-slate-300">
+                <span>Horas manuales por semana:</span>
+                <span class="font-bold text-amber-400" id="hero-hours-label">40 hrs</span>
+              </div>
+              <input id="hero-hours" type="range" min="10" max="150" value="40" class="thumb-amber" />
+              <div class="flex justify-between text-[10px] text-slate-400"><span>10 hrs</span><span>80 hrs</span><span>150 hrs</span></div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3.5 pt-1">
+              <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 text-center">
+                <span class="block text-[10px] text-slate-400 uppercase font-semibold">Tiempo Automatizable</span>
+                <span id="hero-saved-hours" class="text-xl font-bold text-emerald-400 mt-1 block">28 hrs/sem</span>
+              </div>
+              <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 text-center">
+                <span class="block text-[10px] text-slate-400 uppercase font-semibold">Ahorro Anual</span>
+                <span id="hero-saved-money" class="text-xl font-bold text-sky-400 mt-1 block">$21,840</span>
+              </div>
+            </div>
+
+            <div class="p-4 rounded-xl bg-blue-950/60 border border-blue-500/30 text-xs text-slate-300 space-y-2.5">
+              <div class="flex items-center text-amber-300 font-semibold text-xs">
+                <i data-lucide="cpu" class="w-3.5 h-3.5 mr-1.5"></i> Metodologías ARC Sugeridas:
+              </div>
+              <div class="grid grid-cols-2 gap-1.5 text-[10.5px] font-semibold text-slate-200">
+                <span class="px-2 py-1 rounded-md bg-white/10 border border-white/10 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-blue-400 mr-1.5"></span>Marco lógico</span>
+                <span class="px-2 py-1 rounded-md bg-white/10 border border-white/10 flex items-center"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span>Eventos discretos</span>
+                <span class="px-2 py-1 rounded-md bg-white/10 border border-white/10 flex items-center col-span-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-400 mr-1.5"></span>Simulación de Procesos Basada en Datos</span>
+                <span class="px-2 py-1 rounded-md bg-white/10 border border-white/10 flex items-center col-span-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-400 mr-1.5"></span>Modelado Probabilístico de Recursos</span>
+              </div>
+              <div class="pt-1 border-t border-white/10">
+                <span class="text-[10px] uppercase tracking-wider text-emerald-400 font-bold block mb-0.5" id="hero-focus-title">Enfoque Recomendado:</span>
+                <p class="text-[11px] text-slate-300 leading-relaxed" id="hero-focus-desc">Reconstrucción cuantitativa de flujos a partir de logs de transacciones.</p>
+              </div>
+            </div>
+
+            <a href="#contacto" class="block text-center py-3.5 rounded-xl bg-blue-700 hover:bg-blue-600 transition font-bold text-xs text-white shadow-md">
+              Reclamar Sesión de Diagnóstico
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ROI CALCULATOR
+     ============================================================ -->
+<section id="calculadora" class="py-20 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
+      <span class="text-xs font-bold uppercase tracking-widest text-amber-600 bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Herramienta Ejecutiva</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Calculadora de ROI y Ahorro Operativo</h2>
+      <p class="text-slate-600 text-sm">Estime cuánto capital y tiempo pierde actualmente en procesos manuales.</p>
+    </div>
+
+    <div class="bg-slate-50 rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-xl grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div class="lg:col-span-7 space-y-6">
+        <h3 class="text-xl font-bold text-slate-900 flex items-center"><i data-lucide="calculator" class="w-5 h-5 text-blue-800 mr-2.5"></i>Parámetros de su Organización</h3>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Sector o Industria</label>
+          <select id="roi-industry" class="w-full px-4 py-3 rounded-xl border border-slate-300 bg-white text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-blue-700 outline-none">
+            <option value="finanzas">Servicios Financieros y Banca</option>
+            <option value="manufactura">Manufactura e Industria</option>
+            <option value="logistica">Logística y Distribución</option>
+            <option value="salud">Salud y Farmacéuticas</option>
+            <option value="comercio">Comercio y Retail</option>
+            <option value="servicios">Consultoría y Servicios Profesionales</option>
+          </select>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-bold text-slate-700">
+            <span>Colaboradores en procesos operativos:</span>
+            <span class="text-blue-800 font-extrabold text-sm" id="roi-employees-label">25 Personas</span>
+          </div>
+          <input id="roi-employees" type="range" min="5" max="200" value="25" class="thumb-blue" />
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-bold text-slate-700">
+            <span>Costo hora promedio ($ USD):</span>
+            <span class="text-emerald-700 font-extrabold text-sm" id="roi-cost-label">$15 / hr</span>
+          </div>
+          <input id="roi-cost" type="range" min="8" max="60" value="15" class="thumb-emerald" />
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-bold text-slate-700">
+            <span>Horas semanales en tareas repetitivas:</span>
+            <span class="text-amber-600 font-extrabold text-sm" id="roi-wasted-label">12 horas/semana</span>
+          </div>
+          <input id="roi-wasted" type="range" min="2" max="30" value="12" class="thumb-amber" />
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 bg-[#0A192F] text-white rounded-2xl p-6 sm:p-8 flex flex-col justify-between border border-slate-700 shadow-2xl">
+        <div class="space-y-6">
+          <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+            <span class="text-xs uppercase font-bold text-slate-400 tracking-wider">Proyección Anual ARC</span>
+            <span class="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold border border-emerald-500/30">Clientes ARC</span>
+          </div>
+
+          <div>
+            <span class="text-xs text-slate-400 uppercase font-semibold block">Costo Anual Actual por Ineficiencia:</span>
+            <p class="text-2xl sm:text-3xl font-extrabold text-rose-400 mt-1" id="roi-current-loss">$0 USD</p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2">
+            <span class="text-xs text-slate-300 uppercase font-semibold block">Ahorro Neto Estimado con ARC:</span>
+            <p class="text-3xl font-black text-emerald-400" id="roi-net-savings">$0 USD / año</p>
+            <p class="text-[11px] text-slate-400">Recuperación de hasta un 65% del tiempo invertido.</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-xs">
+            <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
+              <span class="block text-slate-400 text-[10px]">Horas Liberadas / Año</span>
+              <span class="text-base font-bold text-amber-400 mt-0.5 block" id="roi-hours-liberated">0 hrs</span>
+            </div>
+            <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700">
+              <span class="block text-slate-400 text-[10px]">Payback Estimado</span>
+              <span class="text-base font-bold text-sky-400 mt-0.5 block" id="roi-payback">0 Meses</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-6 mt-6 border-t border-slate-800">
+          <button id="roi-cta" type="button" class="w-full py-3.5 px-4 rounded-xl bg-emerald-700 hover:bg-emerald-600 transition font-bold text-xs text-white shadow-lg flex items-center justify-center space-x-2">
+            <span>Solicitar Propuesta con este ROI</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DIAGNOSTIC WIZARD
+     ============================================================ -->
+<section id="diagnostico" class="py-20 bg-slate-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+      <span class="text-xs font-bold uppercase tracking-widest text-emerald-400 bg-emerald-950/70 px-3.5 py-1.5 rounded-full border border-emerald-500/30">Evaluación Guiada</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight">Diagnóstico de Madurez Digital 360°</h2>
+      <p class="text-slate-400 text-sm">Responda 4 preguntas para recibir una evaluación instantánea.</p>
+    </div>
+
+    <div class="max-w-4xl mx-auto bg-slate-800 rounded-3xl p-6 sm:p-10 border border-slate-700 shadow-2xl">
+      <div id="wizard-question-step">
+        <div class="flex justify-between items-center mb-8 border-b border-slate-700 pb-4">
+          <div class="flex items-center space-x-3">
+            <span class="w-8 h-8 rounded-full bg-blue-700 text-white flex items-center justify-center font-bold text-xs" id="wizard-step-number">1</span>
+            <span class="text-sm font-bold text-white" id="wizard-category">Categoría</span>
+          </div>
+          <span class="text-xs font-bold text-amber-400" id="wizard-step-label">Paso 1 de 4</span>
+        </div>
+
+        <div class="w-full bg-slate-700 h-1.5 rounded-full mb-8 overflow-hidden">
+          <div id="wizard-progress-bar" class="bg-gradient-to-r from-blue-500 via-emerald-500 to-amber-500 h-full transition-all duration-300" style="width: 25%"></div>
+        </div>
+
+        <div class="space-y-5">
+          <h4 class="text-base sm:text-lg font-bold text-slate-100" id="wizard-question-text">Pregunta</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs" id="wizard-options"></div>
+        </div>
+      </div>
+
+      <div id="wizard-results" class="hidden space-y-6 animate-fadeIn">
+        <div class="p-6 rounded-2xl bg-slate-900 border border-slate-700 text-center space-y-4">
+          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-blue-900/40 border-2 border-blue-500 text-3xl font-black text-amber-400 mx-auto" id="wizard-score">0%</div>
+          <h3 class="text-2xl font-bold text-white" id="wizard-level-title">Nivel</h3>
+          <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto leading-relaxed" id="wizard-level-desc">Descripción</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 rounded-xl bg-slate-700/50 border border-slate-600 space-y-2">
+            <span class="font-bold text-amber-400 uppercase text-[10px] tracking-wider block">Recomendación #1</span>
+            <h5 class="font-bold text-white text-sm" id="wizard-rec1-title">Título</h5>
+            <p class="text-slate-300 text-xs leading-relaxed" id="wizard-rec1-desc">Descripción</p>
+          </div>
+          <div class="p-4 rounded-xl bg-slate-700/50 border border-slate-600 space-y-2">
+            <span class="font-bold text-emerald-400 uppercase text-[10px] tracking-wider block">Recomendación #2</span>
+            <h5 class="font-bold text-white text-sm" id="wizard-rec2-title">Título</h5>
+            <p class="text-slate-300 text-xs leading-relaxed" id="wizard-rec2-desc">Descripción</p>
+          </div>
+        </div>
+
+        <div class="pt-4 flex flex-col sm:flex-row gap-3">
+          <button type="button" id="wizard-cta" class="flex-1 py-3.5 px-4 rounded-xl font-bold text-white bg-emerald-700 hover:bg-emerald-600 transition text-xs shadow-lg flex items-center justify-center space-x-2">
+            <i data-lucide="send" class="w-4 h-4"></i><span>Recibir Diagnóstico Detallado</span>
+          </button>
+          <button type="button" id="wizard-reset" class="py-3.5 px-6 rounded-xl font-semibold text-slate-300 bg-slate-700 hover:bg-slate-600 transition text-xs flex items-center justify-center space-x-2">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i><span>Reiniciar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES
+     ============================================================ -->
+<section id="servicios" class="py-24 bg-slate-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+      <span class="text-xs font-bold uppercase tracking-widest text-blue-800 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">Soluciones</span>
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Nuestros Servicios de Consultoría</h2>
+      <p class="text-slate-600 text-sm">Acompañamiento desde el análisis estratégico hasta la integración tecnológica total.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="services-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DASHBOARD
+     ============================================================ -->
+<section id="dashboard-demo" class="py-24 bg-slate-950 text-white relative overflow-hidden">
+  <div class="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="absolute bottom-0 left-10 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="flex flex-col lg:flex-row items-start lg:items-end justify-between mb-10 gap-6">
+      <div class="space-y-2">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400 bg-amber-950/70 px-3.5 py-1.5 rounded-full border border-amber-500/40 inline-flex items-center gap-1.5">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>Simulador Interactivo de BI
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">Demostrador de Tableros Ejecutivos</h2>
+        <p class="text-slate-400 text-sm max-w-2xl leading-relaxed">Personalice las variables operativas para visualizar en tiempo real cómo impactan la eficiencia, costos y tiempos.</p>
+      </div>
+      <button id="dash-reset" class="text-xs font-semibold text-slate-400 hover:text-white flex items-center space-x-1.5 bg-slate-900 border border-slate-800 px-3.5 py-2 rounded-xl transition">
+        <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i><span>Restablecer</span>
+      </button>
+    </div>
+
+    <div class="bg-slate-900/95 rounded-3xl p-6 sm:p-7 border border-slate-800 shadow-2xl mb-8 space-y-6">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+        <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
+          <i data-lucide="sliders" class="w-4 h-4 text-emerald-400"></i>Variables de Configuración
+        </h3>
+        <span class="text-[11px] text-emerald-400 font-mono bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-1 rounded-md">Cálculo Activo</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="space-y-2">
+          <label class="text-xs font-semibold text-slate-300">1. Departamento:</label>
+          <select id="dash-dept" class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-3.5 py-2.5 text-xs font-medium focus:ring-2 focus:ring-blue-500 outline-none">
+            <option value="operaciones">Operaciones & Cadena de Suministro</option>
+            <option value="finanzas">Finanzas & Cobranza</option>
+            <option value="ventas">Ventas & CRM</option>
+            <option value="atencion">Atención al Cliente</option>
+          </select>
+          <p class="text-[10.5px] text-slate-400" id="dash-dept-info"></p>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-semibold text-slate-300">
+            <span>2. Automatización:</span><span class="text-amber-400 font-bold font-mono" id="dash-auto-label">75%</span>
+          </div>
+          <input id="dash-auto" type="range" min="20" max="100" step="5" value="75" class="thumb-amber" />
+          <div class="flex justify-between text-[10px] text-slate-400 font-medium"><span>20%</span><span>60%</span><span>100%</span></div>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between text-xs font-semibold text-slate-300">
+            <span>3. Transacciones:</span><span class="text-emerald-400 font-bold font-mono" id="dash-tx-label">14,500</span>
+          </div>
+          <input id="dash-tx" type="range" min="2000" max="50000" step="1000" value="14500" class="thumb-emerald" />
+          <div class="flex justify-between text-[10px] text-slate-400 font-medium"><span>2k</span><span>25k</span><span>50k</span></div>
+        </div>
+
+        <div class="space-y-2">
+          <label class="text-xs font-semibold text-slate-300 block">4. Horizonte:</label>
+          <div class="grid grid-cols-2 gap-2 bg-slate-800 p-1 rounded-xl border border-slate-700">
+            <button type="button" data-timeframe="6m" class="dash-tf-btn py-2 text-xs font-bold rounded-lg transition text-slate-400 hover:text-white">6 Meses</button>
+            <button type="button" data-timeframe="12m" class="dash-tf-btn py-2 text-xs font-bold rounded-lg transition bg-blue-600 text-white">12 Meses</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+        <span class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Eficiencia</span>
+        <div class="flex items-baseline space-x-2 mt-1"><span class="text-2xl font-extrabold text-emerald-400" id="kpi-eff">0%</span><span class="text-xs font-bold text-emerald-500 bg-emerald-950 px-1.5 py-0.5 rounded" id="kpi-eff-delta">+0%</span></div>
+        <span class="text-[10px] text-slate-500 mt-1 block" id="kpi-eff-base">vs. 0% inicial</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+        <span class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Ahorro / Mes</span>
+        <div class="flex items-baseline space-x-2 mt-1"><span class="text-2xl font-extrabold text-amber-400" id="kpi-savings">$0</span></div>
+        <span class="text-[10px] text-slate-500 mt-1 block" id="kpi-savings-yr">$0 / año</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+        <span class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Ciclo</span>
+        <div class="flex items-baseline space-x-2 mt-1"><span class="text-2xl font-extrabold text-sky-400" id="kpi-cycle">0 min</span><span class="text-xs font-bold text-sky-400 bg-sky-950 px-1.5 py-0.5 rounded" id="kpi-cycle-delta">-0%</span></div>
+        <span class="text-[10px] text-slate-500 mt-1 block" id="kpi-cycle-base">De 0 min</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800">
+        <span class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Error Residual</span>
+        <div class="flex items-baseline space-x-2 mt-1"><span class="text-2xl font-extrabold text-rose-400" id="kpi-error">0%</span></div>
+        <span class="text-[10px] text-slate-500 mt-1 block" id="kpi-error-base">Base: 0%</span>
+      </div>
+      <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 col-span-2 sm:col-span-1">
+        <span class="text-[11px] font-semibold text-slate-400 block uppercase tracking-wider">Payback</span>
+        <div class="flex items-baseline space-x-2 mt-1"><span class="text-2xl font-extrabold text-indigo-400" id="kpi-payback">0</span><span class="text-xs font-semibold text-slate-300">meses</span></div>
+        <span class="text-[10px] text-emerald-400 mt-1 block">Retorno acelerado</span>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-800 pb-5 mb-6">
+        <div class="flex flex-wrap bg-slate-800/90 p-1 rounded-xl border border-slate-700/80 gap-1">
+          <button type="button" data-tab="eficiencia" class="dash-tab px-3.5 py-2 rounded-lg text-xs font-bold transition bg-blue-600 text-white">Eficiencia</button>
+          <button type="button" data-tab="costos" class="dash-tab px-3.5 py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white">Costos</button>
+          <button type="button" data-tab="adopcion" class="dash-tab px-3.5 py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white">Adopción</button>
+          <button type="button" data-tab="tiempos" class="dash-tab px-3.5 py-2 rounded-lg text-xs font-bold transition text-slate-400 hover:text-white">Tiempos</button>
+        </div>
+        <span class="text-xs text-slate-400 hidden sm:inline-block">Área: <strong class="text-white" id="dash-area-name"></strong></span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-8 h-80 sm:h-96 w-full relative">
+          <canvas id="dashboard-chart"></canvas>
+        </div>
+        <div class="lg:col-span-4 space-y-5">
+          <div class="p-5 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] text-amber-400 font-bold uppercase tracking-wider">Análisis Ejecutivo</span>
+              <span class="text-[10px] text-slate-400 font-mono" id="dash-analysis-level">Nivel: 75%</span>
+            </div>
+            <h4 class="text-base font-bold text-white" id="dash-analysis-title">Diagnóstico</h4>
+            <p class="text-xs text-slate-300 leading-relaxed" id="dash-analysis-text"></p>
+            <div class="pt-2 border-t border-slate-800 space-y-1.5 text-xs text-slate-300">
+              <div class="flex items-center text-emerald-400 gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i><span id="dash-analysis-cycle">-0% tiempos muertos</span></div>
+              <div class="flex items-center text-sky-400 gap-1.5"><i data-lucide="check-circle" class="w-3.5 h-3.5"></i><span>Control centralizado Cloud</span></div>
+            </div>
+          </div>
+          <button id="dash-cta" type="button" class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-blue-700 to-emerald-700 hover:from-blue-600 hover:to-emerald-600 transition font-bold text-xs text-white shadow-lg flex items-center justify-center space-x-2">
+            <span>Solicitar Propuesta</span><i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT + TEAM (CON FOTOS REALES)
+     ============================================================ -->
+<section id="quienes-somos" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-6 space-y-6">
+        <span class="text-xs font-bold uppercase tracking-widest text-blue-800 bg-blue-50 px-3.5 py-1.5 rounded-full border border-blue-200">Trayectoria Corporativa</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Transformamos Organizaciones a través de la Innovación Integrada</h2>
+        <p class="text-slate-600 text-sm leading-relaxed"><strong class="text-blue-900">ARC Solutions</strong> nació con el objetivo de cerrar la brecha entre la estrategia de negocios tradicional y las soluciones de tecnología avanzada.</p>
+        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">Combinamos consultoría senior, análisis de datos en tiempo real y desarrollo tecnológico ágil para entregar proyectos de alto impacto.</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+          <div class="p-5 rounded-2xl bg-slate-50 border-l-4 border-blue-800 space-y-2">
+            <div class="flex items-center space-x-2 text-blue-900 font-bold text-sm"><i data-lucide="target" class="w-4 h-4"></i><span>Misión</span></div>
+            <p class="text-xs text-slate-600 leading-relaxed">Optimizar el potencial de nuestros clientes mediante la integración inteligente de tecnología, reingeniería de procesos e inteligencia de negocios.</p>
+          </div>
+          <div class="p-5 rounded-2xl bg-slate-50 border-l-4 border-emerald-700 space-y-2">
+            <div class="flex items-center space-x-2 text-emerald-800 font-bold text-sm"><i data-lucide="eye" class="w-4 h-4"></i><span>Visión</span></div>
+            <p class="text-xs text-slate-600 leading-relaxed">Ser la firma consultora de referencia en Latinoamérica para la transformación digital e incremento de la eficiencia operativa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6">
+        <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-100 group">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1200&auto=format&fit=crop" alt="Equipo ARC Solutions" class="w-full h-[460px] object-cover transition-transform duration-700 group-hover:scale-105" />
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+          <div class="absolute bottom-6 left-6 right-6 text-white space-y-1">
+            <p class="text-xs uppercase tracking-wider text-amber-400 font-bold">Sesiones Estratégicas de Campo</p>
+            <h4 class="text-lg font-bold">Acompañamiento Directivo C-Level</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="mt-20 pt-16 border-t border-slate-100">
+      <div class="text-center max-w-2xl mx-auto mb-12 space-y-2">
+        <h3 class="text-2xl font-bold text-slate-900">Socios Directores</h3>
+        <p class="text-slate-500 text-xs sm:text-sm">Especialistas senior liderando la transformación de nuestros clientes.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="executives-grid"></div>
+
+      <!-- Quote CEO -->
+      <div class="mt-14 relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 border border-blue-900/40 p-8 sm:p-12 shadow-2xl text-white">
+        <div class="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-0 -mb-8 -ml-8 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <i data-lucide="quote" class="absolute top-8 right-8 w-24 h-24 text-white/[0.05] pointer-events-none"></i>
+
+        <div class="relative z-10 space-y-6">
+          <span class="inline-flex items-center space-x-1.5 text-xs font-bold uppercase tracking-widest text-amber-400 bg-amber-400/10 border border-amber-400/30 px-3.5 py-1.5 rounded-full">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i><span>Mensaje de Dirección Ejecutiva</span>
+          </span>
+
+          <blockquote class="text-lg sm:text-2xl font-medium text-slate-100 leading-relaxed max-w-4xl tracking-tight">
+            «Nuestra visión trasciende la simple automatización de procesos: transformamos la incertidumbre operativa en <span class="text-amber-300 font-semibold underline decoration-amber-400/40 underline-offset-4">certidumbre matemática y valor estratégico tangible</span>.»
+          </blockquote>
+
+          <div class="pt-6 border-t border-slate-800/80 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="flex items-center space-x-4">
+              <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-amber-400/80 shadow-md bg-slate-800 shrink-0">
+                <img src="./images/ricardo.jpg" alt="Dr. Ricardo Morales" class="exec-photo"
+                     onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#334155;color:#FBBF24;font-weight:800;font-size:20px&quot;>RM</div>';" />
+              </div>
+              <div>
+                <h5 class="text-base sm:text-lg font-black text-white">Dr. Ricardo Morales</h5>
+                <p class="text-xs sm:text-sm font-semibold text-amber-400">CEO & Socio Director | ARC Solutions</p>
+                <p class="text-xs text-slate-400">PhD en Planeación Estratégica y Dirección de Tecnología</p>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2.5 text-xs text-slate-300">
+              <span class="flex items-center space-x-1.5 bg-slate-900/80 border border-slate-700/80 rounded-xl px-3 py-1.5">Rigor Científico</span>
+              <span class="flex items-center space-x-1.5 bg-slate-900/80 border border-slate-700/80 rounded-xl px-3 py-1.5">Impacto Real</span>
+              <span class="flex items-center space-x-1.5 bg-slate-900/80 border border-slate-700/80 rounded-xl px-3 py-1.5">C-Level</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PARTNERS
+     ============================================================ -->
+<section id="aliados" class="py-20 bg-slate-50 border-t border-slate-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+      <span class="text-xs font-bold uppercase tracking-widest text-blue-800 bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Respaldo</span>
+      <h2 class="text-3xl font-extrabold text-slate-900">Clientes y Partners Tecnológicos</h2>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6" id="partners-grid"></div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section id="contacto" class="py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <div class="lg:col-span-5 space-y-8">
+        <div class="space-y-3">
+          <span class="text-xs font-bold uppercase tracking-widest text-emerald-800 bg-emerald-50 px-3.5 py-1.5 rounded-full border border-emerald-200">Contacto</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Agende una Sesión Estratégica</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">Analicemos los desafíos actuales de su organización.</p>
+        </div>
+
+        <div class="space-y-5 pt-2">
+          <div class="flex items-start space-x-4">
+            <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-800 flex items-center justify-center shrink-0"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
+            <div><h4 class="text-sm font-bold text-slate-900">Oficinas Centrales</h4><p class="text-xs text-slate-600 mt-0.5">Torre Futura, Nivel 12, San Salvador.</p></div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0"><i data-lucide="phone" class="w-5 h-5"></i></div>
+            <div><h4 class="text-sm font-bold text-slate-900">Teléfono</h4><p class="text-xs text-slate-600 mt-0.5">+503 2200-8900</p></div>
+          </div>
+          <div class="flex items-start space-x-4">
+            <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0"><i data-lucide="mail" class="w-5 h-5"></i></div>
+            <div><h4 class="text-sm font-bold text-slate-900">Correo</h4><p class="text-xs text-slate-600 mt-0.5">contacto@arcsolutions.com.sv</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <div class="bg-white p-8 sm:p-10 rounded-3xl border border-slate-200 shadow-xl">
+          <h3 class="text-2xl font-bold text-slate-900 mb-6">Solicitud de Consultoría</h3>
+          <form id="contact-form" class="space-y-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div><label class="block text-xs font-bold text-slate-700 uppercase mb-2">Nombre Completo *</label><input required type="text" name="name" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-700 outline-none" placeholder="Ej. Roberto Rodríguez" /></div>
+              <div><label class="block text-xs font-bold text-slate-700 uppercase mb-2">Empresa *</label><input required type="text" name="company" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-700 outline-none" placeholder="Ej. Corporación Global" /></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div><label class="block text-xs font-bold text-slate-700 uppercase mb-2">Correo *</label><input required type="email" name="email" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-700 outline-none" placeholder="correo@empresa.com" /></div>
+              <div><label class="block text-xs font-bold text-slate-700 uppercase mb-2">Teléfono *</label><input required type="tel" name="phone" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-700 outline-none" placeholder="+503 7000-0000" /></div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Servicio Requerido</label>
+              <select id="contact-service" name="service" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-700 outline-none bg-white">
+                <option value="procesos">Reingeniería de Procesos</option>
+                <option value="tecnologia">Integración Tecnológica</option>
+                <option value="bi">BI & Analytics</option>
+                <option value="escalamiento">Desarrollo Empresarial</option>
+                <option value="cambio">Gestión del Cambio</option>
+                <option value="diagnostico_completo">Diagnóstico Completo</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Detalles del Proyecto *</label>
+              <textarea required rows="4" id="contact-message" name="message" class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-blue-700 outline-none" placeholder="Describa brevemente los cuellos de botella actuales..."></textarea>
+            </div>
+            <button type="submit" class="w-full py-4 rounded-xl font-bold text-white bg-emerald-700 hover:bg-emerald-600 transition shadow-lg text-base flex items-center justify-center space-x-2">
+              <i data-lucide="send" class="w-4 h-4"></i><span>Enviar Solicitud</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="contact-toast" class="hidden fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl text-center space-y-4 relative">
+      <button id="contact-toast-close" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700 p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto"><i data-lucide="check-circle-2" class="w-9 h-9"></i></div>
+      <h3 class="text-2xl font-bold text-slate-900">¡Solicitud Registrada!</h3>
+      <p class="text-slate-600 text-sm">Un consultor senior se pondrá en contacto en menos de 24 horas hábiles.</p>
+      <button id="contact-toast-ok" type="button" class="w-full py-3.5 rounded-xl font-bold text-white bg-blue-800 hover:bg-blue-700 transition text-xs">Entendido</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="bg-white border-t border-slate-200 pt-16 pb-12 text-slate-700 text-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-200">
+      <div class="space-y-4">
+        <a href="#inicio" aria-label="ARC Solutions">
+          <img src="./images/logo-arc.png" alt="ARC Solutions" class="logo-footer"
+               onerror="this.replaceWith(Object.assign(document.createElement('span'),{innerHTML:'<span style=&quot;font-weight:800;font-size:20px;color:#091E3A&quot;>ARC <span style=&quot;color:#F97316&quot;>Solutions</span></span>'}));" />
+        </a>
+        <p class="text-xs text-slate-500 leading-relaxed">Firma especializada en consultoría, optimización operativa e integración tecnológica.</p>
+        <span class="inline-block px-3 py-1 rounded-md bg-slate-100 text-[11px] font-semibold text-slate-600 border border-slate-200">NIT: 0614-120516-102-1</span>
+      </div>
+
+      <div class="space-y-4">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-100 pb-2">Enlaces</h4>
+        <ul class="space-y-2.5 text-xs font-medium">
+          <li><a href="#inicio" class="hover:text-blue-800">Inicio</a></li>
+          <li><a href="#servicios" class="hover:text-blue-800">Servicios</a></li>
+          <li><a href="#calculadora" class="hover:text-blue-800">Calculadora ROI</a></li>
+          <li><a href="#diagnostico" class="hover:text-blue-800">Diagnóstico 360°</a></li>
+          <li><a href="#quienes-somos" class="hover:text-blue-800">Quiénes Somos</a></li>
+          <li><a href="#contacto" class="hover:text-blue-800">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-100 pb-2">Redes Sociales</h4>
+        <ul class="space-y-2.5 text-xs font-medium text-slate-600">
+          <li><a href="#" class="hover:text-blue-800 flex items-center space-x-2"><i data-lucide="linkedin" class="w-4 h-4 text-blue-800"></i><span>LinkedIn</span></a></li>
+          <li><a href="#" class="hover:text-blue-800 flex items-center space-x-2"><i data-lucide="facebook" class="w-4 h-4 text-blue-800"></i><span>Facebook</span></a></li>
+          <li><a href="#" class="hover:text-amber-600 flex items-center space-x-2"><i data-lucide="instagram" class="w-4 h-4 text-amber-600"></i><span>Instagram</span></a></li>
+          <li><a href="#" class="hover:text-slate-900 flex items-center space-x-2"><i data-lucide="twitter" class="w-4 h-4 text-slate-800"></i><span>X (Twitter)</span></a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-4">
+        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-900 border-b border-slate-100 pb-2">Calidad</h4>
+        <div class="flex items-center space-x-2 text-xs text-emerald-800 font-semibold"><i data-lucide="shield-check" class="w-4 h-4 text-emerald-700"></i><span>Alineados a ISO 9001</span></div>
+        <p class="text-xs text-slate-600 leading-relaxed">© <span id="year"></span> ARC Solutions.</p>
+      </div>
+    </div>
+    <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400">
+      <p>ARC Solutions – Soluciones Empresariales & Consultoría Tecnológica</p>
+      <div class="flex space-x-4 mt-2 sm:mt-0">
+        <a href="#" class="hover:underline">Privacidad</a><span>•</span><a href="#" class="hover:underline">Términos</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   MOBILE MENU
+   ========================================================= */
+const menuBtn = document.getElementById('mobile-menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+if (menuBtn && mobileMenu) {
+  menuBtn.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+    menuBtn.innerHTML = mobileMenu.classList.contains('hidden')
+      ? '<i data-lucide="menu" class="w-6 h-6"></i>'
+      : '<i data-lucide="x" class="w-6 h-6"></i>';
+    if (window.lucide) lucide.createIcons();
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+    menuBtn.innerHTML = '<i data-lucide="menu" class="w-6 h-6"></i>';
+    if (window.lucide) lucide.createIcons();
+  }));
+}
+
+/* =========================================================
+   HERO SIMULATOR
+   ========================================================= */
+const heroHours = document.getElementById('hero-hours');
+if (heroHours) {
+  const heroHoursLabel = document.getElementById('hero-hours-label');
+  const heroSavedHours = document.getElementById('hero-saved-hours');
+  const heroSavedMoney = document.getElementById('hero-saved-money');
+  const heroFocusTitle = document.getElementById('hero-focus-title');
+  const heroFocusDesc = document.getElementById('hero-focus-desc');
+
+  function updateHero() {
+    const h = Number(heroHours.value);
+    const saved = Math.round(h * 0.7);
+    const money = Math.round(saved * 52 * 12.5);
+    heroHoursLabel.textContent = `${h} hrs`;
+    heroSavedHours.textContent = `${saved} hrs/sem`;
+    heroSavedMoney.textContent = `$${money.toLocaleString('en-US')}`;
+
+    if (h < 40) {
+      heroFocusTitle.textContent = 'Enfoque Recomendado (Marco Lógico):';
+      heroFocusDesc.textContent = 'Estructuración estratégica de objetivos operativos con cálculo probabilístico de capacidad instalada.';
+    } else if (h <= 90) {
+      heroFocusTitle.textContent = 'Enfoque Recomendado (Simulación Basada en Datos):';
+      heroFocusDesc.textContent = 'Reconstrucción cuantitativa de flujos a partir de logs de transacciones para identificar cuellos de botella.';
+    } else {
+      heroFocusTitle.textContent = 'Enfoque Recomendado (Eventos Discretos):';
+      heroFocusDesc.textContent = 'Modelado computacional estocástico avanzado para simular escenarios de alta demanda y redistribución de recursos.';
+    }
+  }
+  heroHours.addEventListener('input', updateHero);
+  updateHero();
+}
+
+/* =========================================================
+   ROI CALCULATOR
+   ========================================================= */
+const roiEmployees = document.getElementById('roi-employees');
+const roiCost = document.getElementById('roi-cost');
+const roiWasted = document.getElementById('roi-wasted');
+if (roiEmployees && roiCost && roiWasted) {
+  const roiEmployeesLabel = document.getElementById('roi-employees-label');
+  const roiCostLabel = document.getElementById('roi-cost-label');
+  const roiWastedLabel = document.getElementById('roi-wasted-label');
+  const roiCurrentLoss = document.getElementById('roi-current-loss');
+  const roiNetSavings = document.getElementById('roi-net-savings');
+  const roiHoursLiberated = document.getElementById('roi-hours-liberated');
+  const roiPayback = document.getElementById('roi-payback');
+
+  let roiState = { employees: 25, hourlyCost: 15, wastedHours: 12 };
+
+  function updateROI() {
+    const employees = Number(roiEmployees.value);
+    const hourlyCost = Number(roiCost.value);
+    const wastedHours = Number(roiWasted.value);
+    roiState = { employees, hourlyCost, wastedHours };
+
+    roiEmployeesLabel.textContent = `${employees} Personas`;
+    roiCostLabel.textContent = `$${hourlyCost} / hr`;
+    roiWastedLabel.textContent = `${wastedHours} horas/semana`;
+
+    const totalYearlyWastedHours = employees * wastedHours * 52;
+    const currentYearlyLoss = totalYearlyWastedHours * hourlyCost;
+    const netSavings = Math.round(currentYearlyLoss * 0.65);
+    const hoursLiberated = Math.round(totalYearlyWastedHours * 0.65);
+    let payback = (18000 / (netSavings / 12)).toFixed(1);
+    if (parseFloat(payback) < 1.5) payback = '1.8';
+
+    roiCurrentLoss.textContent = `$${currentYearlyLoss.toLocaleString('en-US')} USD`;
+    roiNetSavings.textContent = `$${netSavings.toLocaleString('en-US')} USD / año`;
+    roiHoursLiberated.textContent = `${hoursLiberated.toLocaleString('en-US')} hrs`;
+    roiPayback.textContent = `${payback} Meses`;
+  }
+  [roiEmployees, roiCost, roiWasted].forEach(el => el.addEventListener('input', updateROI));
+  updateROI();
+
+  document.getElementById('roi-cta').addEventListener('click', () => {
+    const { employees, hourlyCost, wastedHours } = roiState;
+    const totalYearlyWastedHours = employees * wastedHours * 52;
+    const currentYearlyLoss = totalYearlyWastedHours * hourlyCost;
+    const netSavings = Math.round(currentYearlyLoss * 0.65);
+    let payback = (18000 / (netSavings / 12)).toFixed(1);
+    if (parseFloat(payback) < 1.5) payback = '1.8';
+    document.getElementById('contact-message').value =
+      `Deseo propuesta basada en ahorro estimado de $${netSavings.toLocaleString('en-US')} USD / año (${employees} colaboradores, ${wastedHours} hrs/sem, Payback: ${payback} meses).`;
+    document.getElementById('contact-service').value = 'procesos';
+    document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
+/* =========================================================
+   DIAGNOSTIC WIZARD
+   ========================================================= */
+const WIZARD_QUESTIONS = [
+  { id:1, category:'Infraestructura & ERP', question:'¿Cómo gestiona la información operativa, contable e inventarios?',
+    options:[
+      {score:1, title:'Excel / Hojas de Cálculo', description:'Datos manuales sin sincronización entre áreas.'},
+      {score:2, title:'Sistemas Legados', description:'Poca integración entre facturación, ventas e inventarios.'},
+      {score:3, title:'ERP Moderno en la Nube', description:'Información centralizada con oportunidades de automatización.'},
+      {score:4, title:'Ecosistema Integrado con APIs', description:'Sistemas totalmente sincrónicos y arquitectura escalable.'}
+    ]},
+  { id:2, category:'Digitalización & BI', question:'¿Cuál es el nivel de digitalización en la toma de decisiones?',
+    options:[
+      {score:1, title:'Reportes Manuales', description:'Demoras de semanas para consolidar indicadores.'},
+      {score:2, title:'Tableros Básicos en Excel', description:'Actualización lenta y propensa a errores.'},
+      {score:3, title:'Dashboards BI Interactivos', description:'Visualización en tiempo real para directores.'},
+      {score:4, title:'Analytics Predictivo e IA', description:'Modelos automatizados para previsión de demanda.'}
+    ]},
+  { id:3, category:'Estandarización de Procesos', question:'¿Qué tan estandarizados están los procedimientos operativos?',
+    options:[
+      {score:1, title:'Procesos Informales', description:'Dependencia alta en el personal clave.'},
+      {score:2, title:'Manuales en Papel/PDF', description:'Raras veces aplicados en el día a día.'},
+      {score:3, title:'Flujos BPMN Mapeados', description:'Con KPIs claros y responsabilidades asignadas.'},
+      {score:4, title:'Mejora Continua Lean/ISO', description:'Optimización constante guiada por metodología.'}
+    ]},
+  { id:4, category:'Objetivos Principales', question:'¿Cuál es el principal reto que busca resolver este año?',
+    options:[
+      {score:1, title:'Reducción de Costos', description:'Eliminar horas y reprocesos innecesarios.'},
+      {score:2, title:'Integración Tecnológica', description:'Conectar CRM, ERP y logística.'},
+      {score:3, title:'Escalar Operaciones', description:'Estructurar el negocio para mayor volumen.'},
+      {score:4, title:'Cultura Digital', description:'Capacitar y acelerar adopción de herramientas.'}
+    ]}
+];
+
+const wizardState = { currentStep: 1, answers: {}, completed: false };
+
+function renderWizard() {
+  const stepBox = document.getElementById('wizard-question-step');
+  const resultsBox = document.getElementById('wizard-results');
+  if (!stepBox || !resultsBox) return;
+
+  if (wizardState.completed) {
+    stepBox.classList.add('hidden');
+    resultsBox.classList.remove('hidden');
+
+    const totalScore = (wizardState.answers[1]||2)+(wizardState.answers[2]||2)+(wizardState.answers[3]||2)+(wizardState.answers[4]||2);
+    const percentage = Math.round((totalScore / 16) * 100);
+
+    let levelTitle = "Madurez Operativa: Básico";
+    let levelDesc = "Alta dependencia de tareas manuales. Potencial de ahorro inmediato vía automatización.";
+    let rec1Title = "Centralización e Integración de ERP";
+    let rec1Desc = "Migrar datos fragmentados a una sola plataforma cloud.";
+    let rec2Title = "Reingeniería de Flujos Manuales";
+    let rec2Desc = "Mapear procesos críticos e implementar bots RPA.";
+
+    if (percentage >= 70) {
+      levelTitle = "Madurez Operativa: Avanzado";
+      levelDesc = "Sistemas modernos. Siguiente paso: analítica predictiva e IA.";
+      rec1Title = "BI Predictivo";
+      rec1Desc = "Algoritmos predictivos para ventas, demanda e inventario.";
+      rec2Title = "Gobierno Digital";
+      rec2Desc = "Comités directivos con alertas KPI automatizadas.";
+    } else if (percentage >= 45) {
+      levelTitle = "Madurez Operativa: Intermedio";
+      levelDesc = "Bases sólidas con cuellos de botella en integración.";
+      rec1Title = "Automatización RPA & Middleware";
+      rec1Desc = "Conectar CRM y ERP sin recaptura de datos.";
+      rec2Title = "Estandarización BPMN";
+      rec2Desc = "Manuales SOP y KPIs por área funcional.";
+    }
+
+    document.getElementById('wizard-score').textContent = `${percentage}%`;
+    document.getElementById('wizard-level-title').textContent = levelTitle;
+    document.getElementById('wizard-level-desc').textContent = levelDesc;
+    document.getElementById('wizard-rec1-title').textContent = rec1Title;
+    document.getElementById('wizard-rec1-desc').textContent = rec1Desc;
+    document.getElementById('wizard-rec2-title').textContent = rec2Title;
+    document.getElementById('wizard-rec2-desc').textContent = rec2Desc;
+
+    try { confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } }); } catch(e) {}
+    if (window.lucide) lucide.createIcons();
+    return;
+  }
+
+  stepBox.classList.remove('hidden');
+  resultsBox.classList.add('hidden');
+
+  const q = WIZARD_QUESTIONS.find(x => x.id === wizardState.currentStep);
+  document.getElementById('wizard-step-number').textContent = q.id;
+  document.getElementById('wizard-category').textContent = q.category;
+  document.getElementById('wizard-step-label').textContent = `Paso ${wizardState.currentStep} de 4`;
+  document.getElementById('wizard-progress-bar').style.width = `${(wizardState.currentStep / 4) * 100}%`;
+  document.getElementById('wizard-question-text').textContent = q.question;
+
+  const optionsBox = document.getElementById('wizard-options');
+  optionsBox.innerHTML = q.options.map((opt) => {
+    const selected = wizardState.answers[q.id] === opt.score;
+    return `<button type="button" data-score="${opt.score}" data-step="${q.id}"
+      class="p-4 rounded-xl border text-left transition flex flex-col justify-between cursor-pointer ${selected ? 'bg-blue-900/60 border-blue-500 ring-2 ring-blue-500/40' : 'bg-slate-700/60 border-slate-600 hover:border-blue-500 hover:bg-slate-700'}">
+      <div>
+        <strong class="block text-slate-100 mb-1.5 font-semibold text-xs sm:text-sm">${opt.title}</strong>
+        <span class="text-slate-400 leading-relaxed block text-xs">${opt.description}</span>
+      </div>
+    </button>`;
+  }).join('');
+
+  optionsBox.querySelectorAll('button[data-score]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const stepId = Number(btn.dataset.step);
+      const score = Number(btn.dataset.score);
+      wizardState.answers[stepId] = score;
+      if (stepId < 4) {
+        wizardState.currentStep = stepId + 1;
+        renderWizard();
+      } else {
+        wizardState.completed = true;
+        renderWizard();
+      }
+    });
+  });
+}
+
+document.getElementById('wizard-reset').addEventListener('click', () => {
+  wizardState.currentStep = 1;
+  wizardState.answers = {};
+  wizardState.completed = false;
+  renderWizard();
+});
+document.getElementById('wizard-cta').addEventListener('click', () => {
+  const totalScore = (wizardState.answers[1]||2)+(wizardState.answers[2]||2)+(wizardState.answers[3]||2)+(wizardState.answers[4]||2);
+  const percentage = Math.round((totalScore / 16) * 100);
+  document.getElementById('contact-message').value = `Deseo propuesta basada en mi evaluación de madurez digital (${percentage}%).`;
+  document.getElementById('contact-service').value = 'diagnostico_completo';
+  document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+});
+renderWizard();
+
+/* =========================================================
+   SERVICES
+   ========================================================= */
+const SERVICES_DATA = [
+  { id:'procesos', title:'Reingeniería & Análisis de Procesos', subtitle:'Eficiencia Operativa', iconName:'pie-chart',
+    description:'Mapeo de flujos operativos (BPMN), identificación de desperdicios y rediseño estructural.',
+    keyBenefits:['Mapeo AS-IS / TO-BE','Eliminación de Cuellos de Botella','Manuales SOP'] },
+  { id:'tecnologia', title:'Integración Tecnológica (ERP / CRM / RPA)', subtitle:'Unificación Digital', iconName:'network',
+    description:'Selección, arquitectura e implementación de software empresarial para conectar departamentos.',
+    keyBenefits:['ERP / CRM','Automatización RPA','APIs & Middleware'] },
+  { id:'bi', title:'Inteligencia de Negocios & Analytics', subtitle:'Datos en Tiempo Real', iconName:'bar-chart-3',
+    description:'Almacenes de datos y tableros gerenciales para decisiones basadas en información exacta.',
+    keyBenefits:['PowerBI / Tableau','ETL & Cloud Data Lake','Modelos Predictivos'] },
+  { id:'escalamiento', title:'Desarrollo Empresarial & Escalamiento', subtitle:'Crecimiento Rápido', iconName:'trending-up',
+    description:'Estructuración corporativa, expansión regional y optimización de cadena de valor.',
+    keyBenefits:['Planes de Expansión','Gobierno Corporativo','Modelos Escalables'] },
+  { id:'cambio', title:'Gestión del Cambio & Capacitación', subtitle:'Adopción Cultural', iconName:'users',
+    description:'Adopción fluida de nuevas herramientas mediante capacitación gerencial.',
+    keyBenefits:['Capacitación Senior','Planes de Adopción','KPIs por Área'] }
+];
+
+const servicesGrid = document.getElementById('services-grid');
+servicesGrid.innerHTML = SERVICES_DATA.map(srv => `
+  <div class="bg-white rounded-3xl p-7 shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-200 flex flex-col justify-between group hover:-translate-y-1.5">
+    <div class="space-y-5">
+      <div class="w-14 h-14 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-700 group-hover:bg-blue-800 group-hover:text-white transition-colors">
+        <i data-lucide="${srv.iconName}" class="w-6 h-6"></i>
+      </div>
+      <p class="text-[10px] font-bold uppercase tracking-wider text-amber-600">${srv.subtitle}</p>
+      <h3 class="text-lg font-bold text-slate-900 group-hover:text-blue-800 transition">${srv.title}</h3>
+      <p class="text-slate-600 text-sm leading-relaxed">${srv.description}</p>
+      <ul class="space-y-2 text-xs text-slate-600 font-semibold pt-2">
+        ${srv.keyBenefits.map(b => `<li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-emerald-700 mr-2 shrink-0"></i><span>${b}</span></li>`).join('')}
+      </ul>
+    </div>
+    <div class="pt-5 border-t border-slate-100 mt-6">
+      <button type="button" data-service-id="${srv.id}" data-service-title="${srv.title}" class="service-select w-full py-3 px-4 rounded-xl bg-slate-100 hover:bg-blue-800 hover:text-white text-slate-700 font-bold text-xs transition flex items-center justify-between">
+        <span>Solicitar Información</span><i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+    </div>
+  </div>
+`).join('');
+
+document.querySelectorAll('.service-select').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.getElementById('contact-service').value = btn.dataset.serviceId;
+    document.getElementById('contact-message').value = `Deseo cotización para: ${btn.dataset.serviceTitle}.`;
+    document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* =========================================================
+   EXECUTIVE MEMBERS (FOTOS REALES)
+   ========================================================= */
+const EXECUTIVE_MEMBERS = [
+  { name:'Ricardo Morales', title:'PhD Planeación Estratégica y Dirección de Tecnología', role:'Director de Business Intelligence y Ciencia de Datos',
+    expertise:'Especialista en administración y gestión de soluciones empresariales, desarrollo de proyectos de innovación, Business Intelligence y ciencia de datos. Lidera modelos analíticos predictivos y gobernanza de datos para la toma de decisiones directivas.',
+    image:'./images/ricardo.jpg', initials:'RM', accent:'bg-blue-600',
+    tags:['Planeación Estratégica','Business Intelligence','Ciencia de Datos','Gobernanza'] },
+  { name:'Ada Torres', title:'PhD en Dirección y Mercadotecnia', role:'Directora de Reingeniería de Procesos y Marketing',
+    expertise:'Desarrollo de integraciones estratégicas en marketing, reingeniería de procesos, liderazgo y formación integral. Especialista en optimización de cadenas de valor, diseño de cultura organizacional y posicionamiento de marcas.',
+    image:'./images/ada.jpg', initials:'AT', accent:'bg-emerald-600',
+    tags:['Reingeniería','Marketing Estratégico','Liderazgo','Cultura'] },
+  { name:'Carlos Castillo', title:'Licdo. en Computación con Maestría en Asesoría Educativa', role:'Director de Desarrollo e Integraciones Tecnológicas',
+    expertise:'Desarrollo e integración de soluciones basadas en IA y automatización avanzada. Especialista en seguridad de procesos críticos, ciberseguridad, simuladores y tableros de mando ejecutivos.',
+    image:'./images/carlos.jpg', initials:'CC', accent:'bg-amber-500',
+    tags:['IA','Ciberseguridad','Simuladores','Tableros de Mando'] }
+];
+
+document.getElementById('executives-grid').innerHTML = EXECUTIVE_MEMBERS.map(m => `
+  <div class="bg-white rounded-3xl p-6 sm:p-7 text-center space-y-5 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 border border-slate-200 flex flex-col justify-between group">
+    <div class="space-y-4">
+      <div class="exec-photo-wrap relative mx-auto w-44 h-52 sm:w-48 sm:h-56 rounded-2xl overflow-hidden shadow-lg border-2 border-slate-100 group-hover:shadow-xl transition-shadow bg-gradient-to-br from-slate-100 to-slate-200 ring-1 ring-slate-900/5">
+        <img src="${m.image}" alt="${m.name}" class="exec-photo"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e2e8f0,#cbd5e1);color:#334155;font-weight:900;font-size:52px;letter-spacing:-2px&quot;>${m.initials}</div>';" />
+        <div class="absolute top-2.5 right-2.5 bg-slate-950/70 backdrop-blur-sm text-white px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wider uppercase border border-white/20 z-10">Socio Director</div>
+        <div class="absolute bottom-0 inset-x-0 h-1.5 ${m.accent} z-10"></div>
+      </div>
+      <div>
+        <h4 class="text-xl font-black text-slate-900 tracking-tight">${m.name}</h4>
+        <p class="text-xs font-semibold text-amber-800 bg-amber-50 border border-amber-200/70 px-3 py-1 rounded-full inline-block mt-2 leading-tight">${m.title}</p>
+        <h5 class="text-xs font-bold text-blue-900 mt-2.5">${m.role}</h5>
+      </div>
+    </div>
+    <div class="text-xs text-slate-600 bg-slate-50 p-4 rounded-2xl border border-slate-200/80 text-left leading-relaxed mt-2 space-y-2.5">
+      <div>
+        <span class="font-extrabold text-slate-700 text-[10.5px] block mb-1 uppercase tracking-wider">Área de Experticia:</span>
+        <p class="leading-relaxed text-slate-600">${m.expertise}</p>
+      </div>
+      <div class="flex flex-wrap gap-1.5 pt-1.5 border-t border-slate-200/70">
+        ${m.tags.map(t => `<span class="inline-flex items-center text-[10px] font-semibold text-slate-700 bg-white border border-slate-200/90 rounded-md px-2 py-0.5">${t}</span>`).join('')}
+      </div>
+    </div>
+  </div>
+`).join('');
+
+/* =========================================================
+   PARTNERS
+   ========================================================= */
+const PARTNERS_DATA = [
+  { name:'Banco Mercantil', type:'Financiero', icon:'building-2' },
+  { name:'Logística Expresa', type:'Supply Chain', icon:'truck' },
+  { name:'Microsoft', type:'Alianza Tecnológica', icon:'cloud' },
+  { name:'SAP Solutions', type:'Integración ERP', icon:'boxes' },
+  { name:'Farma Salud', type:'Farmacéutico', icon:'heart-pulse' },
+  { name:'Grupo Industrial', type:'Manufactura', icon:'factory' }
+];
+document.getElementById('partners-grid').innerHTML = PARTNERS_DATA.map(p => `
+  <div class="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col items-center justify-center text-center hover:shadow-md transition group">
+    <div class="mb-2 p-3 rounded-xl bg-slate-50 group-hover:bg-blue-50 transition-colors">
+      <i data-lucide="${p.icon}" class="w-6 h-6 text-blue-800"></i>
+    </div>
+    <span class="block text-xs font-extrabold text-slate-900 group-hover:text-blue-800 transition">${p.name}</span>
+    <span class="text-[10px] text-slate-400 mt-0.5">${p.type}</span>
+  </div>
+`).join('');
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+const DEPARTMENTS = {
+  operaciones: { name:'Operaciones & Cadena de Suministro', baseCost:38000, baseEfficiency:44, cycleTimeMin:48, errorBase:8.5 },
+  finanzas:    { name:'Finanzas, Facturación & Cobranza',   baseCost:29000, baseEfficiency:40, cycleTimeMin:36, errorBase:6.8 },
+  ventas:      { name:'Comercial, Ventas & CRM',             baseCost:34000, baseEfficiency:50, cycleTimeMin:42, errorBase:9.2 },
+  atencion:    { name:'Atención al Cliente & Soporte',       baseCost:24000, baseEfficiency:46, cycleTimeMin:28, errorBase:11.5 }
+};
+
+let dashState = { dept:'operaciones', automation:75, txVolume:14500, timeframe:'12m', tab:'eficiencia' };
+let dashboardChart = null;
+
+function computeDashMetrics() {
+  const d = DEPARTMENTS[dashState.dept];
+  const efficiencyBoost = (dashState.automation / 100) * 52;
+  const finalEfficiency = Math.min(98.8, d.baseEfficiency + efficiencyBoost);
+  const costReductionFactor = (dashState.automation / 100) * 0.58;
+  const monthlySavings = Math.round(d.baseCost * costReductionFactor * (dashState.txVolume / 10000));
+  const finalMonthlyCost = Math.max(8000, d.baseCost - monthlySavings);
+  const cycleReduction = (dashState.automation / 100) * 0.78;
+  const optimizedCycleTime = Math.max(3.2, +(d.cycleTimeMin * (1 - cycleReduction)).toFixed(1));
+  const errorReductionFactor = (dashState.automation / 100) * 0.88;
+  const finalErrorRate = +(d.errorBase * (1 - errorReductionFactor)).toFixed(1);
+  const estimatedPayback = +(Math.max(2.8, 12 - (dashState.automation / 100) * 7.5)).toFixed(1);
+  return { finalEfficiency:+finalEfficiency.toFixed(1), monthlySavings, finalMonthlyCost, optimizedCycleTime, finalErrorRate, estimatedPayback, baseCost:d.baseCost, baseEfficiency:d.baseEfficiency, cycleTimeMin:d.cycleTimeMin, errorBase:d.errorBase };
+}
+
+function buildChartData(metrics) {
+  const months6 = ['M1','M2','M3','M4','M5','M6'];
+  const months12 = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  const months = dashState.timeframe === '6m' ? months6 : months12;
+  const totalSteps = months.length;
+  const d = DEPARTMENTS[dashState.dept];
+
+  return months.map((m, idx) => {
+    const progressRatio = (idx + 1) / totalSteps;
+    const progressCurve = Math.pow(progressRatio, 0.75);
+    const effBefore = Math.round(d.baseEfficiency + (Math.sin(idx) * 2));
+    const effGain = (metrics.finalEfficiency - d.baseEfficiency) * progressCurve;
+    const effAfter = Math.round(d.baseEfficiency + effGain);
+    const costStart = d.baseCost * (dashState.txVolume / 10000);
+    const costDrop = (costStart - metrics.finalMonthlyCost) * progressCurve;
+    const costCurrent = Math.round(costStart - costDrop);
+    const adoption = Math.round(15 + (84 * Math.min(1, progressRatio * (0.8 + (dashState.automation / 200)))));
+    const cycleDrop = (d.cycleTimeMin - metrics.optimizedCycleTime) * progressCurve;
+    const currentCycle = +(d.cycleTimeMin - cycleDrop).toFixed(1);
+    return { month: m, efficiencyBefore: effBefore, efficiencyAfter: effAfter, operationalCost: costCurrent, userAdoption: Math.min(99, adoption), cycleTime: currentCycle };
+  });
+}
+
+function updateDashboard() {
+  const metrics = computeDashMetrics();
+  const d = DEPARTMENTS[dashState.dept];
+
+  document.getElementById('dash-dept-info').textContent = `Base: $${d.baseCost.toLocaleString('en-US')} USD/mes · Ciclo: ${d.cycleTimeMin} min`;
+  document.getElementById('dash-auto-label').textContent = `${dashState.automation}%`;
+  document.getElementById('dash-tx-label').textContent = dashState.txVolume.toLocaleString('en-US');
+  document.getElementById('dash-area-name').textContent = d.name;
+
+  document.getElementById('kpi-eff').textContent = `${metrics.finalEfficiency}%`;
+  document.getElementById('kpi-eff-delta').textContent = `+${Math.round(metrics.finalEfficiency - d.baseEfficiency)}%`;
+  document.getElementById('kpi-eff-base').textContent = `vs. ${d.baseEfficiency}% inicial`;
+  document.getElementById('kpi-savings').textContent = `$${metrics.monthlySavings.toLocaleString('en-US')}`;
+  document.getElementById('kpi-savings-yr').textContent = `$${(metrics.monthlySavings * 12).toLocaleString('en-US')} / año`;
+  document.getElementById('kpi-cycle').textContent = `${metrics.optimizedCycleTime} min`;
+  document.getElementById('kpi-cycle-delta').textContent = `-${Math.round(((d.cycleTimeMin - metrics.optimizedCycleTime) / d.cycleTimeMin) * 100)}%`;
+  document.getElementById('kpi-cycle-base').textContent = `De ${d.cycleTimeMin} min antes`;
+  document.getElementById('kpi-error').textContent = `${metrics.finalErrorRate}%`;
+  document.getElementById('kpi-error-base').textContent = `Base: ${d.errorBase}%`;
+  document.getElementById('kpi-payback').textContent = metrics.estimatedPayback;
+
+  document.getElementById('dash-analysis-level').textContent = `Nivel: ${dashState.automation}%`;
+  document.getElementById('dash-analysis-title').textContent = `Diagnóstico para ${d.name}`;
+  document.getElementById('dash-analysis-text').innerHTML =
+    `Con automatización del <strong>${dashState.automation}%</strong> y volumen de <strong>${dashState.txVolume.toLocaleString('en-US')} ops/mes</strong>, alcanzará una eficiencia del <strong>${metrics.finalEfficiency}%</strong>, liberando <strong>$${(metrics.monthlySavings * 12).toLocaleString('en-US')} USD/año</strong>.`;
+  document.getElementById('dash-analysis-cycle').textContent = `Reducción tiempos muertos: -${Math.round(((d.cycleTimeMin - metrics.optimizedCycleTime) / d.cycleTimeMin) * 100)}%`;
+
+  renderChart(metrics);
+}
+
+function renderChart(metrics) {
+  const chartData = buildChartData(metrics);
+  const canvas = document.getElementById('dashboard-chart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (dashboardChart) dashboardChart.destroy();
+
+  const commonOptions = {
+    responsive: true, maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { color: '#CBD5E1', font: { size: 11 } } },
+      tooltip: { backgroundColor: '#0B192C', borderColor: 'rgba(255,255,255,0.15)', borderWidth: 1, titleColor: '#F8FAFC', bodyColor: '#F8FAFC', padding: 10, cornerRadius: 8 }
+    },
+    scales: {
+      x: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+      y: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+    }
+  };
+
+  if (dashState.tab === 'eficiencia') {
+    dashboardChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: chartData.map(d => d.month),
+        datasets: [
+          { label: 'Tradicional (%)', data: chartData.map(d => d.efficiencyBefore), borderColor: '#EF4444', borderDash: [4,4], borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#EF4444', tension: 0.35 },
+          { label: 'Con ARC (%)', data: chartData.map(d => d.efficiencyAfter), borderColor: '#10B981', borderWidth: 3.5, pointRadius: 5, pointBackgroundColor: '#10B981', tension: 0.35 }
+        ]
+      },
+      options: { ...commonOptions, scales: { ...commonOptions.scales, y: { ...commonOptions.scales.y, min: 30, max: 100, ticks: { color:'#94A3B8', callback: v => v + '%' } } } }
+    });
+  } else if (dashState.tab === 'costos') {
+    dashboardChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: chartData.map(d => d.month), datasets: [{ label: 'Gasto Operativo', data: chartData.map(d => d.operationalCost), borderColor: '#F59E0B', backgroundColor: 'rgba(245,158,11,0.25)', borderWidth: 3, fill: true, pointRadius: 4, pointBackgroundColor: '#F59E0B', tension: 0.35 }] },
+      options: { ...commonOptions, scales: { ...commonOptions.scales, y: { ...commonOptions.scales.y, ticks: { color:'#94A3B8', callback: v => '$' + Math.round(v/1000) + 'k' } } } }
+    });
+  } else if (dashState.tab === 'adopcion') {
+    dashboardChart = new Chart(ctx, {
+      type: 'line',
+      data: { labels: chartData.map(d => d.month), datasets: [{ label: 'Adopción (%)', data: chartData.map(d => d.userAdoption), borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.25)', borderWidth: 3, fill: true, pointRadius: 4, pointBackgroundColor: '#10B981', tension: 0.35 }] },
+      options: { ...commonOptions, scales: { ...commonOptions.scales, y: { ...commonOptions.scales.y, min: 0, max: 100, ticks: { color:'#94A3B8', callback: v => v + '%' } } } }
+    });
+  } else {
+    dashboardChart = new Chart(ctx, {
+      type: 'bar',
+      data: { labels: chartData.map(d => d.month), datasets: [{ label: 'Ciclo (min)', data: chartData.map(d => d.cycleTime), backgroundColor: '#38BDF8', borderRadius: 6 }] },
+      options: { ...commonOptions, plugins: { ...commonOptions.plugins, legend: { display: false } } }
+    });
+  }
+}
+
+document.getElementById('dash-dept').addEventListener('change', e => { dashState.dept = e.target.value; updateDashboard(); });
+document.getElementById('dash-auto').addEventListener('input', e => { dashState.automation = Number(e.target.value); updateDashboard(); });
+document.getElementById('dash-tx').addEventListener('input', e => { dashState.txVolume = Number(e.target.value); updateDashboard(); });
+document.querySelectorAll('.dash-tf-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    dashState.timeframe = btn.dataset.timeframe;
+    document.querySelectorAll('.dash-tf-btn').forEach(b => { b.classList.remove('bg-blue-600', 'text-white'); b.classList.add('text-slate-400', 'hover:text-white'); });
+    btn.classList.add('bg-blue-600', 'text-white');
+    btn.classList.remove('text-slate-400', 'hover:text-white');
+    updateDashboard();
+  });
+});
+document.querySelectorAll('.dash-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    dashState.tab = btn.dataset.tab;
+    document.querySelectorAll('.dash-tab').forEach(b => { b.classList.remove('bg-blue-600', 'bg-amber-600', 'bg-emerald-600', 'bg-sky-600', 'text-white'); b.classList.add('text-slate-400', 'hover:text-white'); });
+    const colorMap = { eficiencia:'bg-blue-600', costos:'bg-amber-600', adopcion:'bg-emerald-600', tiempos:'bg-sky-600' };
+    btn.classList.add(colorMap[dashState.tab], 'text-white');
+    btn.classList.remove('text-slate-400', 'hover:text-white');
+    updateDashboard();
+  });
+});
+
+document.getElementById('dash-reset').addEventListener('click', () => {
+  dashState = { dept:'operaciones', automation:75, txVolume:14500, timeframe:'12m', tab: dashState.tab };
+  document.getElementById('dash-dept').value = 'operaciones';
+  document.getElementById('dash-auto').value = 75;
+  document.getElementById('dash-tx').value = 14500;
+  document.querySelectorAll('.dash-tf-btn').forEach(b => {
+    b.classList.remove('bg-blue-600', 'text-white');
+    b.classList.add('text-slate-400', 'hover:text-white');
+    if (b.dataset.timeframe === '12m') { b.classList.add('bg-blue-600', 'text-white'); b.classList.remove('text-slate-400','hover:text-white'); }
+  });
+  updateDashboard();
+});
+
+document.getElementById('dash-cta').addEventListener('click', () => {
+  const m = computeDashMetrics();
+  const d = DEPARTMENTS[dashState.dept];
+  document.getElementById('contact-message').value =
+    `Simulación BI: ${d.name}, automatización ${dashState.automation}%, volumen ${dashState.txVolume.toLocaleString('en-US')} ops/mes. Proyección: eficiencia ${m.finalEfficiency}%, ahorro $${m.monthlySavings.toLocaleString('en-US')} USD/mes.`;
+  document.getElementById('contact-service').value = 'bi';
+  document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+});
+
+updateDashboard();
+
+/* =========================================================
+   CONTACT FORM
+   ========================================================= */
+const contactForm = document.getElementById('contact-form');
+const contactToast = document.getElementById('contact-toast');
+
+contactForm.addEventListener('submit', e => {
+  e.preventDefault();
+  contactToast.classList.remove('hidden');
+  contactToast.classList.add('flex');
+});
+function closeToast() {
+  contactToast.classList.add('hidden');
+  contactToast.classList.remove('flex');
+  contactForm.reset();
+}
+document.getElementById('contact-toast-close').addEventListener('click', closeToast);
+document.getElementById('contact-toast-ok').addEventListener('click', closeToast);
+contactToast.addEventListener('click', e => { if (e.target === contactToast) closeToast(); });
+
+/* =========================================================
+   YEAR + ICONS + SMOOTH SCROLL
+   ========================================================= */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+function initIcons() { if (window.lucide) lucide.createIcons(); }
+window.addEventListener('load', initIcons);
+initIcons();
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const id = a.getAttribute('href');
+    if (id && id.length > 1) {
+      const el = document.querySelector(id);
+      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+    }
+  });
+});
+</script>
+</body>
+</html>
