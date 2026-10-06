@@ -1,6 +1,0 @@
-{
-  "name": "ARC Solutions",
-  "description": "Firma de consultoría estratégica, reingeniería de procesos, integración tecnológica (ERP, CRM, RPA) y business intelligence para empresas.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}
